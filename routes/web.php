@@ -20,6 +20,17 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/send-notification', function () {
-    $user = \App\User::all()->random();
-    $user->notify(new \App\Notifications\SendOnesignalNotification());
+    $client = new Berkayk\OneSignal\OneSignalClient(
+        config('onesignal.app_id'),
+        config('onesignal.rest_api_key'),
+        config('onesignal.user_auth_key')
+    );
+
+    $client->sendNotificationToAll(
+        "Some Message",
+        $url = 'https://forums.voz.vn/showthread.php?t=7422074&page=2',
+        $data = null,
+        $buttons = null,
+        $schedule = null
+    );
 });
